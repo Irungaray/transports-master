@@ -11,17 +11,20 @@ import {
     Button,
 } from "@material-ui/core";
 
+// Internal components
+import Input from "../../atoms/Input/Input";
+
 // Internal modules
 import { useStyles } from "./styles";
-import Input from "../../atoms/Input/Input";
+import { editShipper } from "../../../helpers/requests";
 
 const EditShipperForm = (props) => {
     const [values, setValues] = useState({
-        cuit: props.cuit || "",
-        name: props.name || "",
-        contact: props.contact || "",
-        phone: props.phone || "",
-        ctrrem: props.ctrrem || false,
+        code: props.codigo,
+        name: props.nombre,
+        contact: props.contacto,
+        phone: props.telefono,
+        ctrm: props.contrareembolso,
     });
     const [err, setErr] = useState(false);
 
@@ -41,18 +44,61 @@ const EditShipperForm = (props) => {
         });
     };
 
-    const handleEditShipper = () => {
-        console.log('editado');
+    const handleEditShipper = async () => {
+        const { code, name, contact, phone, ctrm } = values;
+        const { id, token } = props;
+        const res = await editShipper(
+            {
+                "id": id,
+                "codigo": code,
+                "nombre": name,
+                "contacto": contact,
+                "telefono": phone,
+                "contrareembolso": ctrm,
+                "calificacion": "X",
+                "activo": true,
+                "horarios": [
+                    {
+                        "codPostal": "5800",
+                        "lunes": "9:0",
+                        "martes": "",
+                        "miercoles": "",
+                        "jueves": "10:0",
+                        "viernes": "",
+                        "sabado": "",
+                        "entrega": 8
+                    },
+                    {
+                        "codPostal": "5801",
+                        "lunes": "10:0",
+                        "martes": "10:0",
+                        "miercoles": "",
+                        "jueves": "10:0",
+                        "viernes": "10:0",
+                        "sabado": "9:0",
+                        "entrega": 8
+                    }
+                ]
+            },
+            token
+
+        )
+
+        if (res.status === 200) {
+            console.log('transportista editado');
+        } else {
+            setErr(true);
+        }
     }
 
-    console.log(values);
+    console.log("valores:", values);
 
     return (
         <Box className={box}>
             <Input
                 name="cuit"
                 label="Código (CUIT)"
-                value={values.cuit}
+                value={values.code}
                 onChange={handleChange}
             />
 
@@ -81,7 +127,7 @@ const EditShipperForm = (props) => {
                 // className={rmmbr}
                 control={
                     <Switch
-                        checked={values.ctrrem}
+                        checked={values.ctrm}
                         onChange={handleCheck}
                         name="ctrrem"
                         color="primary"

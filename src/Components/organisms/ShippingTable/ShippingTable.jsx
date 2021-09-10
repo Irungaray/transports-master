@@ -26,10 +26,7 @@ import EditShipperForm from "../../molecules/EditShipperForm/EditShipperForm";
 
 const ShippingTable = (props) => {
     const [shippers, setShippers] = useState([]);
-    const [shipperId, setShipperId] = useState("")
-    const [selectedShipper, setSelectedShipper] = useState({
-
-    })
+    const [selectedShipper, setSelectedShipper] = useState({})
     const [openModal, setOpenModal] = useState(false);
 
     const { row, cell } = useStyles();
@@ -52,16 +49,14 @@ const ShippingTable = (props) => {
         getData()
     }, [])
 
-    console.log(shippers);
+    // console.log(shippers);
 
     const handleShipper = async (id) => {
-        setShipperId(id)
-
-        const res = await getShipperById(shipperId, props.token)
+        const res = await getShipperById(id, props.token)
 
         if (res.status === 200) {
             setSelectedShipper(res.data)
-            console.log('selected shipper:', selectedShipper);
+            // console.log('selected shipper:', selectedShipper);
             setOpenModal(true);
         } else {
             console.log('error');
@@ -113,11 +108,13 @@ const ShippingTable = (props) => {
                     title={`Modificar Transportista ${selectedShipper.nombre}`}
                     component={
                         <EditShipperForm
-                            cuit={selectedShipper.codigo}
-                            name={selectedShipper.nombre}
-                            contact={selectedShipper.contacto}
-                            phone={selectedShipper.telefono}
-                            ctrrem={selectedShipper.contrareembolso}
+                            token={props.token}
+                            id={selectedShipper.id}
+                            codigo={selectedShipper.codigo}
+                            nombre={selectedShipper.nombre}
+                            contacto={selectedShipper.contacto}
+                            telefono={selectedShipper.telefono}
+                            contrareembolso={selectedShipper.contrareembolso}
                         />
                     }
                     open={openModal}

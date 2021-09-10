@@ -59,3 +59,22 @@ export const getShippers = async (token) => {
         return error.response;
     }
 };
+
+export const editShipper = async (data, token) => {
+    try {
+        const res = await Axios(
+            {
+                method: "POST",
+                url: `${uri}/Transportes/Grabar`,
+                data: data,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        return res;
+    } catch (error) {
+        return error.response;
+    }
+};
