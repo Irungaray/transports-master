@@ -21,10 +21,14 @@ import { getShippers, getShipperById } from "../../../helpers/requests";
 // Internal components
 import PaperWithTitle from "../../containers/PaperWithTitle/PaperWithTitle";
 import Cell from "../../atoms/Cell/Cell";
+import Modal from "../../molecules/Modal/Modal";
+import EditShipperForm from "../../molecules/EditShipperForm/EditShipperForm";
 
 const ShippingTable = (props) => {
     const [shippers, setShippers] = useState([]);
-    const [shipper, setShipper] = useState("")
+    const [shipperId, setShipperId] = useState("")
+    const [selectedShipper, setSelectedShipper] = useState({})
+    const [openModal, setOpenModal] = useState(false);
 
     const { row, cell } = useStyles();
 
@@ -47,15 +51,21 @@ const ShippingTable = (props) => {
     }, [])
 
     const handleShipper = async (id) => {
-        setShipper(id)
+        setShipperId(id)
 
-        const res = await getShipperById(shipper, props.token)
+        const res = await getShipperById(shipperId, props.token)
 
         if (res.status === 200) {
-            console.log(res.data);
+            setOpenModal(true);
+            setSelectedShipper(res.data)
+            console.log('shipper:', selectedShipper);
         } else {
             console.log('error');
         }
+    }
+
+    const handleEditShipper = () => {
+        console.log('editado');
     }
 
     return (
@@ -92,6 +102,26 @@ const ShippingTable = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {openModal && (
+                <Modal
+                    title={`Modificar Transportista ${selectedShipper.nombre}`}
+                    component={
+                        <EditShipperForm
+                            cuit={selectedShipper.codigo}
+                            name={selectedShipper.nombre}
+                            contact={selectedShipper.contacto}
+                            phone={selectedShipper.telefono}
+                            ctrrem={selectedShipper.contrareembolso}
+                        />
+                    }
+                    open={openModal}
+                    cancelButtonText="Cancelar"
+                    confirmButtonText="Guardar"
+                    handleCancelButton={() => setOpenModal(false)}
+                    handleConfirmButton={handleEditShipper}
+                />
+            )}
         </PaperWithTitle>
     );
 };
