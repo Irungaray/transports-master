@@ -4,7 +4,7 @@ const colors = {
     secondaryColor: '#93B5C6',
 
     // Light backgrounds
-    backgroundPrimaryColor: '#11111',
+    backgroundPrimaryColor: '#EFEFEF',
     backgroundSecondaryColor: '#B3B3B3',
 
     // Font Colors

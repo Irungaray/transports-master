@@ -1,5 +1,6 @@
 // External modules
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 // External components
 import {
@@ -22,7 +23,7 @@ import { login } from "../../../helpers/requests";
 // Internal components
 import PaperWithTitle from "../../containers/PaperWithTitle/PaperWithTitle";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const [values, setValues] = useState({
         username: "desa" || "",
         password: "test" || "",
@@ -55,7 +56,7 @@ const LoginForm = () => {
         console.log(res.data.id_token);
 
         if (res.status === 200) {
-            alert('Logeado')
+            props.setToken(res.data.id_token)
             setErr(false)
         } else {
             setErr(true)
@@ -132,6 +133,10 @@ const LoginForm = () => {
             }
         </PaperWithTitle>
     );
+};
+
+LoginForm.propTypes = {
+    setToken: PropTypes.func,
 };
 
 export default LoginForm;
