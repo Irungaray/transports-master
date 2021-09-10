@@ -11,11 +11,13 @@ import {
     FormControlLabel,
     Switch,
     Button,
+    Typography,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 // Internal modules
 import { useStyles } from "./styles";
+import { login } from "../../../helpers/requests";
 
 // Internal components
 import PaperWithTitle from "../../containers/PaperWithTitle/PaperWithTitle";
@@ -27,8 +29,9 @@ const LoginForm = () => {
         rememberMe: true,
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [err, setErr] = useState(false);
 
-    const { textField, rmmbr } = useStyles();
+    const { textField, rmmbr, error } = useStyles();
 
     const handleChange = (e) => {
         setValues({
@@ -44,9 +47,19 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("submit");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // const res = {status: 200}
+        const res = await login(values.username, values.password, values.rememberMe);
+        console.log(res.data.id_token);
+
+        if (res.status === 200) {
+            alert('Logeado')
+            setErr(false)
+        } else {
+            setErr(true)
+        }
     };
 
     return (
@@ -111,6 +124,12 @@ const LoginForm = () => {
             <Button variant="contained" color="primary" type="submit">
                 Ingresar
             </Button>
+
+            {err &&
+                <Typography variant="body2" color="error" className={error}>
+                    Error al iniciar sesión.
+                </Typography>
+            }
         </PaperWithTitle>
     );
 };

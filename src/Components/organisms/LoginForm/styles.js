@@ -8,5 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     rmmbr: {
         justifyContent: 'center'
+    },
+    error: {
+        marginTop: theme.spacing(2),
     }
 }));
