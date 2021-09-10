@@ -8,5 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     },
     error: {
         marginTop: theme.spacing(2),
-    }
+    },
+    primaryColor: {
+        color: theme.palette.primary.main,
+    },
 }));

@@ -11,7 +11,7 @@ import {
 const Input = (props) => {
     return (
         <>
-            <FormControl variant="outlined" style={{ marginBottom: "8px"}}>
+            <FormControl variant="outlined" style={{ marginBottom: "16px", width: "100%"}}>
                 <InputLabel htmlFor="outlined-basic">
                     {props.label}
                 </InputLabel>

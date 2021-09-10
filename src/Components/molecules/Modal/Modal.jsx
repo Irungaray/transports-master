@@ -9,6 +9,7 @@ import {
     DialogContent,
     DialogActions,
     Box,
+    Typography,
 } from "@material-ui/core";
 
 // Internal modules
@@ -19,22 +20,22 @@ const Modal = (props) => {
 
     return (
         <Dialog open={props.open} onClose={props.handleClose}>
-            <DialogTitle>{props.title}</DialogTitle>
-            <DialogContent>{props.component}</DialogContent>
-            <DialogActions>
+            <DialogTitle>
+                {props.title}
+
                 <Button
                     onClick={props.handleCancelButton}
                     color="default"
                     autoFocus
                 >
-                    {props.cancelButtonText}
+                    <Typography variant="body1">
+                        X
+                    </Typography>
                 </Button>
-                <Button
-                    onClick={props.handleConfirmButton}
-                    className={primaryColor}
-                >
-                    {props.confirmButtonText}
-                </Button>
+            </DialogTitle>
+            <DialogContent>{props.component}</DialogContent>
+            <DialogActions>
+
             </DialogActions>
         </Dialog>
     );
@@ -44,7 +45,6 @@ Modal.propTypes = {
     title: PropTypes.string,
     component: PropTypes.element,
     cancelButtonText: PropTypes.string,
-    confirmButtonText: PropTypes.string,
     handleConfirmButton: PropTypes.func,
     handleCancelButton: PropTypes.func,
     open: PropTypes.bool,

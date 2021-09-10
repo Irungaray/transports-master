@@ -3,7 +3,13 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 // External components
-import { Box, Typography, FormControlLabel, Switch } from "@material-ui/core";
+import {
+    Box,
+    Typography,
+    FormControlLabel,
+    Switch,
+    Button,
+} from "@material-ui/core";
 
 // Internal modules
 import { useStyles } from "./styles";
@@ -19,7 +25,7 @@ const EditShipperForm = (props) => {
     });
     const [err, setErr] = useState(false);
 
-    const { box, error } = useStyles();
+    const { box, error, primaryColor } = useStyles();
 
     const handleChange = (e) => {
         setValues({
@@ -34,6 +40,10 @@ const EditShipperForm = (props) => {
             rememberMe: !values.rememberMe,
         });
     };
+
+    const handleEditShipper = () => {
+        console.log('editado');
+    }
 
     console.log(values);
 
@@ -85,6 +95,15 @@ const EditShipperForm = (props) => {
                     Error al editar transportista.
                 </Typography>
             )}
+
+            <Button
+                onClick={handleEditShipper}
+                className={primaryColor}
+            >
+                <Typography variant="body1">
+                    Editar transportista
+                </Typography>
+            </Button>
         </Box>
     );
 };

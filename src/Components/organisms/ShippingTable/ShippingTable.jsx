@@ -27,7 +27,9 @@ import EditShipperForm from "../../molecules/EditShipperForm/EditShipperForm";
 const ShippingTable = (props) => {
     const [shippers, setShippers] = useState([]);
     const [shipperId, setShipperId] = useState("")
-    const [selectedShipper, setSelectedShipper] = useState({})
+    const [selectedShipper, setSelectedShipper] = useState({
+
+    })
     const [openModal, setOpenModal] = useState(false);
 
     const { row, cell } = useStyles();
@@ -50,22 +52,25 @@ const ShippingTable = (props) => {
         getData()
     }, [])
 
+    console.log(shippers);
+
     const handleShipper = async (id) => {
         setShipperId(id)
 
         const res = await getShipperById(shipperId, props.token)
 
         if (res.status === 200) {
-            setOpenModal(true);
             setSelectedShipper(res.data)
-            console.log('shipper:', selectedShipper);
+            console.log('selected shipper:', selectedShipper);
+            setOpenModal(true);
         } else {
             console.log('error');
         }
     }
 
-    const handleEditShipper = () => {
-        console.log('editado');
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedShipper({});
     }
 
     return (
@@ -118,8 +123,7 @@ const ShippingTable = (props) => {
                     open={openModal}
                     cancelButtonText="Cancelar"
                     confirmButtonText="Guardar"
-                    handleCancelButton={() => setOpenModal(false)}
-                    handleConfirmButton={handleEditShipper}
+                    handleCancelButton={handleCloseModal}
                 />
             )}
         </PaperWithTitle>
