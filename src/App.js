@@ -1,16 +1,18 @@
-// External components
-import { Paper, Container } from "@material-ui/core";
+// External modules
+import { ThemeProvider } from "@material-ui/styles";
+
+// Internal components
+import LoginForm from "./Components/organisms/LoginForm/LoginForm";
 
 // Internal modules
-import "./App.css";
+import "./styles/App.css";
+import theme from './theme';
 
 function App() {
     return (
-        <Container className="App" maxWidth="xs">
-            <Paper elevation={3}>
-                
-            </Paper>
-        </Container>
+        <ThemeProvider theme={theme}>
+            <LoginForm />
+        </ThemeProvider>
     );
 }
 
