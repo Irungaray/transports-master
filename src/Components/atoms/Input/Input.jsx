@@ -8,13 +8,17 @@ import {
     FormControl,
 } from "@material-ui/core";
 
+// Internal modules
+import { useStyles } from "./styles";
+
 const Input = (props) => {
+    const { inpt } = useStyles();
+
     const wdth = props.label.length * 8.5;
 
-    console.log(wdth);
     return (
         <>
-            <FormControl variant="outlined" style={{ marginBottom: "16px", width: "100%"}}>
+            <FormControl variant="outlined" className={inpt}>
                 <InputLabel htmlFor="outlined-basic">
                     {props.label}
                 </InputLabel>

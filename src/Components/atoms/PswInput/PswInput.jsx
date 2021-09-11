@@ -19,7 +19,7 @@ const PswInput = (props) => {
 
     console.log(wdth);
     return (
-        <FormControl variant="outlined">
+        <FormControl variant="outlined" style={{ backgroundColor: "white" }}>
             <InputLabel htmlFor="outlined-adornment-password">
                 {props.label}
             </InputLabel>

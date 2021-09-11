@@ -29,7 +29,7 @@ const ShippingTable = (props) => {
     const [selectedShipper, setSelectedShipper] = useState({})
     const [openModal, setOpenModal] = useState(false);
 
-    const { row, cell } = useStyles();
+    const { row, cell, dataRow } = useStyles();
 
     const tags = [
         "Código", "Nombre", "Contacto", "Teléfono", "C/Reembolso", "Calificación", "Activo",
@@ -71,7 +71,7 @@ const ShippingTable = (props) => {
 
     return (
         <PaperWithTitle title="Transportes">
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} elevation={5}>
                 <Table aria-label="custom pagination table">
                     <TableHead>
                         <TableRow className={row}>
@@ -90,7 +90,7 @@ const ShippingTable = (props) => {
 
                     <TableBody>
                         {shippers.map((shipper, index) => (
-                            <TableRow key={index} onClick={() => handleShipper(shipper.id)}>
+                            <TableRow key={index} onClick={() => handleShipper(shipper.id)} className={dataRow}>
                                 <Cell text={shipper.codigo} />
                                 <Cell text={shipper.contacto} />
                                 <Cell text={shipper.nombre} />
