@@ -3,18 +3,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 // External components
-import {
-    InputLabel,
-    OutlinedInput,
-    InputAdornment,
-    IconButton,
-    FormControl,
-    FormControlLabel,
-    Switch,
-    Button,
-    Typography,
-} from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { Button, Typography } from "@material-ui/core";
 
 // Internal modules
 import { useStyles } from "./styles";
@@ -22,6 +11,9 @@ import { login } from "../../../helpers/requests";
 
 // Internal components
 import PaperWithTitle from "../../containers/PaperWithTitle/PaperWithTitle";
+import Input from "../../atoms/Input/Input";
+import PswInput from "../../atoms/PswInput/PswInput";
+import SwitchInput from "../../atoms/SwitchInput/SwitchInput";
 
 const LoginForm = (props) => {
     const [values, setValues] = useState({
@@ -29,10 +21,9 @@ const LoginForm = (props) => {
         password: "test" || "",
         rememberMe: true,
     });
-    const [showPassword, setShowPassword] = useState(false);
     const [err, setErr] = useState(false);
 
-    const { textField, rmmbr, error } = useStyles();
+    const { error } = useStyles();
 
     const handleChange = (e) => {
         setValues({
@@ -44,7 +35,7 @@ const LoginForm = (props) => {
     const handleCheck = () => {
         setValues({
             ...values,
-            rememberMe: !values.rememberMe
+            rememberMe: !values.rememberMe,
         });
     };
 
@@ -52,73 +43,41 @@ const LoginForm = (props) => {
         e.preventDefault();
 
         // const res = {status: 200}
-        const res = await login(values.username, values.password, values.rememberMe);
+        const res = await login(
+            values.username,
+            values.password,
+            values.rememberMe
+        );
         console.log(res.data.id_token);
 
         if (res.status === 200) {
-            props.setToken(res.data.id_token)
-            setErr(false)
+            props.setToken(res.data.id_token);
+            setErr(false);
         } else {
-            setErr(true)
+            setErr(true);
         }
     };
 
     return (
         <PaperWithTitle isForm onSubmit={handleSubmit} title="Ingresar">
-            <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-basic">
-                    Nombre de usuario
-                </InputLabel>
+            <Input
+                label="Nombre de usuario"
+                name="username"
+                value={values.username}
+                onChange={handleChange}
+            />
 
-                <OutlinedInput
-                    id="outlined-basic"
-                    type="username"
-                    label="Nombre de usuario"
-                    variant="outlined"
-                    value={values.username}
-                    onChange={handleChange}
-                />
-            </FormControl>
+            <PswInput
+                label="Contraseña"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+            />
 
-            <FormControl variant="outlined" className={textField}>
-                <InputLabel htmlFor="outlined-adornment-password">
-                    Contraseña
-                </InputLabel>
-                <OutlinedInput
-                    id="outlined-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    value={values.password}
-                    onChange={handleChange}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => setShowPassword(!showPassword)}
-                                onMouseDown={(e) => e.preventDefault()}
-                                edge="end"
-                            >
-                                {showPassword ? (
-                                    <Visibility />
-                                ) : (
-                                    <VisibilityOff />
-                                )}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                    labelWidth={85}
-                />
-            </FormControl>
-
-            <FormControlLabel
-                className={rmmbr}
-                control={
-                    <Switch
-                        checked={values.rememberMe}
-                        onChange={handleCheck}
-                        name="rememberMe"
-                        color="primary"
-                    />
-                }
+            <SwitchInput
+                checked={values.rememberMe}
+                onChange={handleCheck}
+                name="rememberMe"
                 label="Recuérdame"
             />
 
@@ -126,11 +85,11 @@ const LoginForm = (props) => {
                 Ingresar
             </Button>
 
-            {err &&
+            {err && (
                 <Typography variant="body2" color="error" className={error}>
                     Error al iniciar sesión.
                 </Typography>
-            }
+            )}
         </PaperWithTitle>
     );
 };

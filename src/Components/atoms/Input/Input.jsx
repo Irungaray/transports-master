@@ -9,6 +9,9 @@ import {
 } from "@material-ui/core";
 
 const Input = (props) => {
+    const wdth = props.label.length * 8.5;
+
+    console.log(wdth);
     return (
         <>
             <FormControl variant="outlined" style={{ marginBottom: "16px", width: "100%"}}>
@@ -23,7 +26,7 @@ const Input = (props) => {
                     value={props.value}
                     onChange={props.onChange}
                     name={props.name}
-                    labelWidth={100}
+                    labelWidth={wdth}
                 />
             </FormControl>
         </>
