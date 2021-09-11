@@ -66,6 +66,7 @@ const ShippingTable = (props) => {
     const handleCloseModal = () => {
         setOpenModal(false);
         setSelectedShipper({});
+        getData()
     }
 
     return (
@@ -115,6 +116,7 @@ const ShippingTable = (props) => {
                             contacto={selectedShipper.contacto}
                             telefono={selectedShipper.telefono}
                             contrareembolso={selectedShipper.contrareembolso}
+                            handleCloseModal={handleCloseModal}
                         />
                     }
                     open={openModal}

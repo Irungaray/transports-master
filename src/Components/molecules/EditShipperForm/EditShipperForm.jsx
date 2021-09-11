@@ -85,7 +85,8 @@ const EditShipperForm = (props) => {
         )
 
         if (res.status === 200) {
-            console.log('transportista editado');
+            alert(`Transportista ${values.name} modificado correctamente`)
+            props.handleCloseModal()
         } else {
             setErr(true);
         }
