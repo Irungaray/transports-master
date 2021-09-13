@@ -17,11 +17,9 @@ const PaperWithTitle = (props) => {
     return (
         <Container className={container} maxWidth="sm">
             <Paper className={paper} elevation={3}>
-                {props.title &&
-                    <Typography variant="h4" className={title}>
-                        {props.title}
-                    </Typography>
-                }
+                <Typography variant="h4" className={title}>
+                    {props.title}
+                </Typography>
 
                 {props.isForm
                     ? <form onSubmit={props.onSubmit} className={form}>{props.children}</form>

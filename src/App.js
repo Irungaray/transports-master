@@ -1,5 +1,6 @@
 // External modules
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Cookie from "js-cookie";
 
 // Internal components
 import LoginForm from "./Components/organisms/LoginForm/LoginForm";
@@ -9,13 +10,26 @@ import ShippingTable from "./Components/organisms/ShippingTable/ShippingTable";
 import "./styles/App.css";
 
 const App = () => {
-    // TODO: Save token on localStorage
-    const [token, setToken] = useState('');
+    const [isLogged, setIsLogged] = useState(false);
+
+    const setToken = (value) => {
+        Cookie.set('token', value, { expires: 3 });
+        setIsLogged(true)
+    }
+
+    useEffect(() => {
+        const checkLogin = () => {
+            if (Cookie.get('token') !== undefined) setIsLogged(true);
+        }
+
+        checkLogin()
+    }, [])
 
     let currentPage = <></>
 
     switch (true) {
-        case token.length > 1:
+        case isLogged:
+            const token = Cookie.get('token')
             currentPage = <ShippingTable token={token} />
             break;
 

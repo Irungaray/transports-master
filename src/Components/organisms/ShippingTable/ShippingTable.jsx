@@ -13,6 +13,7 @@ import {
     Paper,
     Typography,
 } from "@material-ui/core";
+import { ExitToAppIcon } from '@material-ui/icons';
 
 // Internal modules
 import { useStyles } from "./styles";
