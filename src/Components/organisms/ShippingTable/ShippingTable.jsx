@@ -75,8 +75,8 @@ const ShippingTable = (props) => {
 
     return (
         <PaperWithTitle title="Transportes">
-            <TableContainer component={Paper} elevation={5}>
-                <Table aria-label="custom pagination table">
+            <TableContainer component={Paper} elevation={5} maxWidth="xl">
+                <Table aria-label="custom pagination table" >
                     <TableHead>
                         <TableRow className={row}>
                             {tags.map((tag, index) => (

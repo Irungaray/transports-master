@@ -19,7 +19,6 @@ import { useStyles } from "./styles";
 import { editShipper } from "../../../helpers/requests";
 
 const EditShipperForm = (props) => {
-    console.log(props);
     const [values, setValues] = useState({
         code: props.codigo,
         name: props.nombre,
@@ -41,7 +40,7 @@ const EditShipperForm = (props) => {
     const handleCheck = () => {
         setValues({
             ...values,
-            rememberMe: !values.rememberMe,
+            ctrm: !values.ctrm,
         });
     };
 

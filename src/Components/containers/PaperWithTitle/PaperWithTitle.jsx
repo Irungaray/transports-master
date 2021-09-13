@@ -15,7 +15,7 @@ const PaperWithTitle = (props) => {
     const { container, paper, title, form } = useStyles();
 
     return (
-        <Container className={container} maxWidth="sm">
+        <Container className={container} maxWidth="xl">
             <Paper className={paper} elevation={3}>
                 <Typography variant="h4" className={title}>
                     {props.title}
