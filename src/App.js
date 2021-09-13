@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import Cookie from "js-cookie";
 
 // Internal components
+import Header from "./Components/containers/Header/Header";
 import LoginForm from "./Components/organisms/LoginForm/LoginForm";
 import ShippingTable from "./Components/organisms/ShippingTable/ShippingTable";
 
 // Internal modules
 import "./styles/App.css";
-import Header from "./Components/containers/Header/Header";
 
 const App = () => {
     const [isLogged, setIsLogged] = useState(false);

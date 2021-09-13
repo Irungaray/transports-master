@@ -26,41 +26,15 @@ import Cell from "../../atoms/Cell/Cell";
 import Modal from "../../molecules/Modal/Modal";
 import EditShipperForm from "../../molecules/EditShipperForm/EditShipperForm";
 import TablePaginationActions from "../../molecules/TablePaginationActions/TablePaginationActions";
+import Input from "../../atoms/Input/Input";
 
 const ShippingTable = (props) => {
+    const [searchValue, setSearchValue] = useState("");
     const [shippers, setShippers] = useState([]);
     const [selectedShipper, setSelectedShipper] = useState({});
     const [openModal, setOpenModal] = useState(false);
 
-    // TABLE PAGINATION [
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-
-    const emptyRows =
-        rowsPerPage -
-        Math.min(rowsPerPage, shippers.length - page * rowsPerPage);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-    // ]
-
     const { row, cell, dataRow } = useStyles();
-
-    const tags = [
-        "Código",
-        "Nombre",
-        "Contacto",
-        "Teléfono",
-        "C/Reembolso",
-        "Calificación",
-        "Activo",
-    ];
 
     const getData = async () => {
         const res = await getShippers(props.token);
@@ -83,7 +57,7 @@ const ShippingTable = (props) => {
             setSelectedShipper(res.data);
             setOpenModal(true);
         } else {
-            alert("Error al obtener el transportista seleccionado");
+            alert("Error al obtener el transportista seleccionado.");
         }
     };
 
@@ -93,8 +67,49 @@ const ShippingTable = (props) => {
         getData();
     };
 
+    const filteredShippers = shippers.filter((shipper) => (
+        shipper.contacto.toLowerCase().includes(searchValue.toLowerCase())
+    ))
+
+    const shippersToMap = searchValue.length > 1 ? filteredShippers : shippers;
+
+    // TABLE PAGINATION [
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const emptyRows =
+        rowsPerPage -
+        Math.min(rowsPerPage, shippers.length - page * rowsPerPage);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+    // ]
+
+    const tags = [
+        "Código",
+        "Nombre",
+        "Contacto",
+        "Teléfono",
+        "C/Reembolso",
+        "Calificación",
+        "Activo",
+    ];
+
     return (
         <PaperWithTitle title="Transportes">
+            <Input
+                name="search"
+                label="Buscar transportista..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+            />
+
             <TableContainer component={Paper} elevation={5}>
                 <Table aria-label="custom pagination table">
                     <TableHead>
@@ -114,13 +129,17 @@ const ShippingTable = (props) => {
 
                     <TableBody>
                         {(rowsPerPage > 0
-                            ? shippers.slice(
+                            ? shippersToMap.slice(
                                   page * rowsPerPage,
                                   page * rowsPerPage + rowsPerPage
                               )
-                            : shippers
+                            : shippersToMap
                         ).map((shipper, index) => (
-                            <TableRow key={index} onClick={() => handleShipper(shipper.id)} className={dataRow}>
+                            <TableRow
+                                key={index}
+                                onClick={() => handleShipper(shipper.id)}
+                                className={dataRow}
+                            >
                                 <Cell text={shipper.codigo} />
                                 <Cell text={shipper.contacto} />
                                 <Cell text={shipper.nombre} />
@@ -141,13 +160,20 @@ const ShippingTable = (props) => {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: "Todas", value: -1 }]}
+                                rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: "Todas", value: -1 },
+                                ]}
                                 colSpan={5}
                                 count={shippers.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 SelectProps={{
-                                    inputProps: { "aria-label": "rows per page" },
+                                    inputProps: {
+                                        "aria-label": "rows per page",
+                                    },
                                     native: true,
                                 }}
                                 onPageChange={handleChangePage}
