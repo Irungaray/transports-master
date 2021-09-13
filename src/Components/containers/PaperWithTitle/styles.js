@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         minHeight: "80vh",
-        marginTop: theme.spacing(2),
+        // marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2)
     },
     paper: {

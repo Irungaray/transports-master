@@ -8,14 +8,10 @@ import ShippingTable from "./Components/organisms/ShippingTable/ShippingTable";
 
 // Internal modules
 import "./styles/App.css";
+import Header from "./Components/containers/Header/Header";
 
 const App = () => {
     const [isLogged, setIsLogged] = useState(false);
-
-    const setToken = (value) => {
-        Cookie.set('token', value, { expires: 3 });
-        setIsLogged(true)
-    }
 
     useEffect(() => {
         const checkLogin = () => {
@@ -24,6 +20,17 @@ const App = () => {
 
         checkLogin()
     }, [])
+
+    const setToken = (value) => {
+        Cookie.set('token', value, { expires: 3 });
+        setIsLogged(true)
+    }
+
+    const handleLogout = () => {
+        Cookie.remove('token');
+        window.location.reload();
+        setIsLogged(false);
+    }
 
     let currentPage = <></>
 
@@ -39,6 +46,7 @@ const App = () => {
 
     return (
         <>
+            <Header isLogged={isLogged} onClick={handleLogout} />
             {currentPage}
         </>
     );
