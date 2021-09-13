@@ -1,4 +1,8 @@
+// External modules
 import { createTheme } from "@material-ui/core/styles";
+import { esES } from '@material-ui/core/locale';
+
+// Internal modules
 import colors from "./styles/colors";
 // import fonts from "./styles/fonts";
 
@@ -21,20 +25,6 @@ const theme = createTheme({
       danger: colors.dangerColor
     },
   },
-
-//   typography: {
-//     h1: { fontFamily: fonts.titleFont, fontWeight: 800 },
-//     h2: { fontFamily: fonts.titleFont, fontWeight: 700 },
-//     h3: { fontFamily: fonts.titleFont, fontWeight: 700 },
-//     h4: { fontFamily: fonts.titleFont, fontWeight: 700 },
-//     h5: { fontFamily: fonts.titleFont, fontWeight: 700 },
-//     h6: { fontFamily: fonts.titleFont, fontWeight: 700 },
-//     subtitle1: { fontFamily: fonts.titleFont, fontWeight: 700 },
-//     subtitle2: { fontFamily: fonts.titleFont, fontWeight: 600 },
-//     body1: { fontFamily: fonts.paragraphFont, fontWeight: 400 },
-//     body2: { fontFamily: fonts.paragraphFont, fontWeight: 400 },
-//     button: { fontFamily: fonts.titleFont, fontWeight: 800 },
-//   },
-});
+}, esES);
 
 export default theme;

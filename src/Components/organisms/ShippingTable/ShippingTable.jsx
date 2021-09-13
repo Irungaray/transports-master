@@ -5,15 +5,16 @@ import PropTypes from "prop-types";
 // External components
 import {
     Table,
-    TableBody,
     TableHead,
+    TableBody,
+    TableFooter,
+    TablePagination,
     TableCell,
     TableContainer,
     TableRow,
     Paper,
     Typography,
 } from "@material-ui/core";
-import { ExitToAppIcon } from '@material-ui/icons';
 
 // Internal modules
 import { useStyles } from "./styles";
@@ -24,11 +25,30 @@ import PaperWithTitle from "../../containers/PaperWithTitle/PaperWithTitle";
 import Cell from "../../atoms/Cell/Cell";
 import Modal from "../../molecules/Modal/Modal";
 import EditShipperForm from "../../molecules/EditShipperForm/EditShipperForm";
+import TablePaginationActions from "../../molecules/TablePaginationActions/TablePaginationActions";
 
 const ShippingTable = (props) => {
     const [shippers, setShippers] = useState([]);
     const [selectedShipper, setSelectedShipper] = useState({});
     const [openModal, setOpenModal] = useState(false);
+
+    // TABLE PAGINATION [
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const emptyRows =
+        rowsPerPage -
+        Math.min(rowsPerPage, shippers.length - page * rowsPerPage);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+    // ]
 
     const { row, cell, dataRow } = useStyles();
 
@@ -75,8 +95,8 @@ const ShippingTable = (props) => {
 
     return (
         <PaperWithTitle title="Transportes">
-            <TableContainer component={Paper} elevation={5} maxWidth="xl">
-                <Table aria-label="custom pagination table" >
+            <TableContainer component={Paper} elevation={5}>
+                <Table aria-label="custom pagination table">
                     <TableHead>
                         <TableRow className={row}>
                             {tags.map((tag, index) => (
@@ -93,12 +113,14 @@ const ShippingTable = (props) => {
                     </TableHead>
 
                     <TableBody>
-                        {shippers.map((shipper, index) => (
-                            <TableRow
-                                key={index}
-                                onClick={() => handleShipper(shipper.id)}
-                                className={dataRow}
-                            >
+                        {(rowsPerPage > 0
+                            ? shippers.slice(
+                                  page * rowsPerPage,
+                                  page * rowsPerPage + rowsPerPage
+                              )
+                            : shippers
+                        ).map((shipper, index) => (
+                            <TableRow key={index} onClick={() => handleShipper(shipper.id)} className={dataRow}>
                                 <Cell text={shipper.codigo} />
                                 <Cell text={shipper.contacto} />
                                 <Cell text={shipper.nombre} />
@@ -108,7 +130,32 @@ const ShippingTable = (props) => {
                                 <Cell text={shipper.activo} />
                             </TableRow>
                         ))}
+
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 53 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
                     </TableBody>
+
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25, { label: "Todas", value: -1 }]}
+                                colSpan={5}
+                                count={shippers.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                SelectProps={{
+                                    inputProps: { "aria-label": "rows per page" },
+                                    native: true,
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </TableContainer>
 
