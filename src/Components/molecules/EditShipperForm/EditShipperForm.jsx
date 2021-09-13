@@ -19,6 +19,7 @@ import { useStyles } from "./styles";
 import { editShipper } from "../../../helpers/requests";
 
 const EditShipperForm = (props) => {
+    console.log(props);
     const [values, setValues] = useState({
         code: props.codigo,
         name: props.nombre,
@@ -92,8 +93,6 @@ const EditShipperForm = (props) => {
         }
     }
 
-    console.log("valores:", values);
-
     return (
         <Box className={box}>
             <Input
@@ -155,6 +154,15 @@ const EditShipperForm = (props) => {
     );
 };
 
-EditShipperForm.propTypes = {};
+EditShipperForm.propTypes = {
+    token: PropTypes.string,
+    id: PropTypes.number,
+    codigo: PropTypes.string,
+    nombre: PropTypes.string,
+    contacto: PropTypes.string,
+    telefono: PropTypes.string,
+    contrareembolso: PropTypes.bool,
+    handleCloseModal: PropTypes.func,
+};
 
 export default EditShipperForm;

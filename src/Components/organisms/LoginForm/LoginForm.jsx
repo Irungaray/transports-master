@@ -48,7 +48,6 @@ const LoginForm = (props) => {
             values.password,
             values.rememberMe
         );
-        console.log(res.data.id_token);
 
         if (res.status === 200) {
             props.setToken(res.data.id_token);

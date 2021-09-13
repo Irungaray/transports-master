@@ -9,9 +9,8 @@ import ShippingTable from "./Components/organisms/ShippingTable/ShippingTable";
 import "./styles/App.css";
 
 const App = () => {
+    // TODO: Save token on localStorage
     const [token, setToken] = useState('');
-
-    console.log(token)
 
     let currentPage = <></>
 

@@ -26,6 +26,7 @@ const PswInput = (props) => {
             <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
+                name={props.name}
                 value={props.value}
                 onChange={props.onChange}
                 endAdornment={

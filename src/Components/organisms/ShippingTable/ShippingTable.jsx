@@ -26,48 +26,51 @@ import EditShipperForm from "../../molecules/EditShipperForm/EditShipperForm";
 
 const ShippingTable = (props) => {
     const [shippers, setShippers] = useState([]);
-    const [selectedShipper, setSelectedShipper] = useState({})
+    const [selectedShipper, setSelectedShipper] = useState({});
     const [openModal, setOpenModal] = useState(false);
 
     const { row, cell, dataRow } = useStyles();
 
     const tags = [
-        "Código", "Nombre", "Contacto", "Teléfono", "C/Reembolso", "Calificación", "Activo",
+        "Código",
+        "Nombre",
+        "Contacto",
+        "Teléfono",
+        "C/Reembolso",
+        "Calificación",
+        "Activo",
     ];
 
     const getData = async () => {
-        const res = await getShippers(props.token)
+        const res = await getShippers(props.token);
 
         if (res.status === 200) {
-            setShippers(res.data)
+            setShippers(res.data);
         } else {
-            alert("Error al obtener los datos, por favor recargue la página.")
+            alert("Error al obtener los datos, por favor recargue la página.");
         }
-    }
+    };
 
     useEffect(() => {
-        getData()
-    }, [])
-
-    // console.log(shippers);
+        getData();
+    }, []);
 
     const handleShipper = async (id) => {
-        const res = await getShipperById(id, props.token)
+        const res = await getShipperById(id, props.token);
 
         if (res.status === 200) {
-            setSelectedShipper(res.data)
-            // console.log('selected shipper:', selectedShipper);
+            setSelectedShipper(res.data);
             setOpenModal(true);
         } else {
-            console.log('error');
+            alert("Error al obtener el transportista seleccionado");
         }
-    }
+    };
 
     const handleCloseModal = () => {
         setOpenModal(false);
         setSelectedShipper({});
-        getData()
-    }
+        getData();
+    };
 
     return (
         <PaperWithTitle title="Transportes">
@@ -90,7 +93,11 @@ const ShippingTable = (props) => {
 
                     <TableBody>
                         {shippers.map((shipper, index) => (
-                            <TableRow key={index} onClick={() => handleShipper(shipper.id)} className={dataRow}>
+                            <TableRow
+                                key={index}
+                                onClick={() => handleShipper(shipper.id)}
+                                className={dataRow}
+                            >
                                 <Cell text={shipper.codigo} />
                                 <Cell text={shipper.contacto} />
                                 <Cell text={shipper.nombre} />
