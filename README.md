@@ -20,8 +20,8 @@ Al clickear en una fila, se setea el transportista seleccionado y se gatilla la 
     -Si esta responde con un estado 200, se devuelve un modal con un formulario para editar los datos del transportista.
 
 Al editar el modal, se setean los valores en un nuevo estado. Si se clickea en el botón "Guardar", se gatilla la funcion "editShipper()", que realiza un POST con los datos modificados (o no) que tenemos en el estado del componente.
-    -Si responde con un error, se le informa al usuario.
-    -Si responde con un estado 200, se ejecuta un alert() para informar al usuario, se cierra el modal, y se ejecuta nuevamente la función "getShippers()" para traer los datos actualizados.
+    -Si esta responde con un error, se le informa al usuario.
+    -Si esta responde con un estado 200, se ejecuta un alert() para informar al usuario, se cierra el modal, y se ejecuta nuevamente la función "getShippers()" para traer los datos actualizados.
 
 Al clickear el botón Logout, se elimina la cookie, se refresca la página y vuelve a retornarse el Login.
 
@@ -38,13 +38,13 @@ npm start
 - Mejoras generales en la UI.
 
 # Resta:
-- Usar OAuth o alguna librería para gestionar la sesión.
+- Usar OAuth o librería similar para gestionar la sesión.
 - En el modal, tabla con horarios y otros datos del transportista.
 - Protejer variables de entorno.
 - Botón Actualizar.
 
 # Conclusiones:
-Aplicación altamente escalable. Componentes modularizados con el patrón Atomic Design. UI construida con Material UI, a fin de economizar tiempo y lograr una interfaz moderna y amigable con el usuario.
+Aplicación altamente escalable. Componentes modularizados con el patrón Atomic Design. UI construida con Material UI, a fin de economizar tiempo y lograr una interfaz moderna y amigable con el usuario. Peticiones asíncronas con Axios.
 
 A fines de prueba técnica, considero lo hecho suficiente para validar mis habilidades.
 

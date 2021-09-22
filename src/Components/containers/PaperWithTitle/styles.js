@@ -5,10 +5,16 @@ export const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "80vh",
+            minHeight: "80vh",
         // marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2)
     },
+    // center: {
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     minHeight: "80vh",
+    //     alignItems: "center",
+    // },
     paper: {
         padding: theme.spacing(4),
         display: 'flex',

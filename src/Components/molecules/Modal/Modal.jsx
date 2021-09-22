@@ -11,12 +11,7 @@ import {
     Typography,
 } from "@material-ui/core";
 
-// Internal modules
-import { useStyles } from "./styles";
-
 const Modal = (props) => {
-    const {primaryColor } = useStyles();
-
     return (
         <Dialog open={props.open} onClose={props.handleClose}>
             <DialogTitle>
